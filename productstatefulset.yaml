@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mystatefulset
+spec:
+  selector:
+    matchLabels:
+      app: product-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: product-app
+    spec:
+      containers:
+      - name: product-app-container
+        image: amitpal83/product-service:1.0.1
+        volumeMounts:
+              - name: product-pod-volume
+                mountPath: /app/data
+        ports:
+              - containerPort: 9080
+      volumes:
+          - name: product-pod-volume
+            emptyDir: {}
